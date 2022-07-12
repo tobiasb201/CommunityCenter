@@ -1,18 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-class newTopic extends StatefulWidget {
+class NewTopic extends StatefulWidget {
+  const NewTopic({Key? key}) : super(key: key);
   @override
-  State<newTopic> createState() => _newTopicState();
+  State<NewTopic> createState() => _NewTopicState();
 }
 
-class _newTopicState extends State<newTopic> {
+class _NewTopicState extends State<NewTopic> {
 
   late Box _topicBox;
   final myController = TextEditingController();
 
   @override
+  // ignore: must_call_super
   initState(){
     _topicBox = Hive.box("topics");
   }
@@ -22,21 +23,21 @@ class _newTopicState extends State<newTopic> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("CommunityCenter",style: TextStyle(color: Colors.white70)),
+        title: const Text("CommunityCenter",style: TextStyle(color: Colors.white70)),
         elevation: 1.0,
       ),
       body: Column(
         children: <Widget>[
-          SizedBox(height: 10,),
-          Text("New Channel Topic",style: TextStyle(fontSize: 20)),
+          const SizedBox(height: 10,),
+          const Text("New Channel Topic",style: TextStyle(fontSize: 20)),
           Padding(
-              padding: EdgeInsets.only(left: 20,right: 20,top: 10),
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
               child: TextField(
                 controller: myController,
                 decoration: InputDecoration(
                   hintText: "Enter a new Topic",
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.send),
+                      icon: const Icon(Icons.send),
                       onPressed: (){
                         var topicLength= _topicBox.length;
                         _topicBox.put(topicLength,myController.text);

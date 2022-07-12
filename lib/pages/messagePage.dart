@@ -1,13 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/models/messagemodel.dart';
+import 'package:flutterapp/models/messageModel.dart';
 import 'package:hive/hive.dart';
 
-import '../service/MessageService.dart';
+import '../service/messageService.dart';
 
 class MessagePage extends StatefulWidget {
-   MessageModel messageData;
-   MessagePage(this.messageData);
+   final MessageModel messageData;
+   // ignore: use_key_in_widget_constructors
+   const MessagePage(this.messageData);
 
   @override
   State<MessagePage> createState() => _MessagePageState();
@@ -17,11 +17,12 @@ class _MessagePageState extends State<MessagePage> {
 
   String? _newComment;
   final _formKey = GlobalKey<FormState>();
-  final MessageService _messageService = new MessageService();
+  final MessageService _messageService = MessageService();
 
   late Box _userBox;
 
   @override
+  // ignore: must_call_super
   initState(){
     _userBox = Hive.box("username");
   }
@@ -31,7 +32,7 @@ class _MessagePageState extends State<MessagePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("CommunityCenter",style: TextStyle(color: Colors.white70)),
+        title: const Text("CommunityCenter",style: TextStyle(color: Colors.white70)),
         backgroundColor: Colors.blue,
       ),
       body: Column(children: <Widget>[
@@ -45,7 +46,7 @@ class _MessagePageState extends State<MessagePage> {
                       title: Row(
                         children: <Widget>[
                           Text(widget.messageData.username),
-                          Text(" ("+widget.messageData.topic+")",style: TextStyle(fontSize: 11,color: Colors.blue),)
+                          Text(" ("+widget.messageData.topic+")",style: const TextStyle(fontSize: 11,color: Colors.blue),)
                         ],
                       )
                     ),
@@ -69,17 +70,17 @@ class _MessagePageState extends State<MessagePage> {
         Form(
           key: _formKey,
           child: TextFormField(
-                style: TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   hintText: 'Comment:',
                   hintStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.send),
+                    icon: const Icon(Icons.send),
                     onPressed: () async {
                       if(_formKey.currentState!.validate()){
                         _formKey.currentState!.save(); //Saves state of textfields
-                        SubMessage newSubMessage = new SubMessage(subMessage: _newComment!, parent: widget.messageData.id, username: _userBox.get('username'));
+                        SubMessage newSubMessage = SubMessage(subMessage: _newComment!, parent: widget.messageData.id, username: _userBox.get('username'));
                         _messageService.sendSubMessage(newSubMessage);
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("New Comment created",style: TextStyle(color: Colors.amber[600]),), behavior: SnackBarBehavior.floating,)
@@ -94,6 +95,7 @@ class _MessagePageState extends State<MessagePage> {
                 validator: (String? value) {
                   (value != null) ? 'No Comment typed' : null;
                   _userBox.get('username')!=null ? 'Create a Username first.' : null;
+                  return null;
                 },
                 onSaved: (String? value) {
                   _newComment= value!;

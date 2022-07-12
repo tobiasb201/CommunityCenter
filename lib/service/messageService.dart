@@ -1,4 +1,4 @@
-import 'package:flutterapp/models/messagemodel.dart';
+import 'package:flutterapp/models/messageModel.dart';
 import 'package:http/http.dart' as http;
 
 class MessageService{
@@ -8,7 +8,7 @@ class MessageService{
     List<MessageModel> messageModel;
     var response = await http.get(Uri.parse("http://192.168.178.56:8080/messageData?topic=$topic"));
     if(response.statusCode==200){
-      messageModel = MessageModelFromJson(response.body);
+      messageModel = messageModelFromJson(response.body);
       return messageModel;
     }else{
       throw Exception("Failed to Load Messages");
@@ -20,7 +20,7 @@ class MessageService{
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-        body: MessageModelToJson(newMessage)
+        body: messageModelToJson(newMessage)
       );
   }
 
@@ -29,13 +29,13 @@ class MessageService{
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: SubMessageToJson(newSubMessage)
+        body: subMessageToJson(newSubMessage)
     );
   }
 
   Future<MessageModel> loadSingleMessage(int? id) async{
     var response = await http.get(Uri.parse("http://192.168.178.56:8080/messageData/$id"));
-    MessageModel messageModel = SingleMessageModelFromJson(response.body);
+    MessageModel messageModel = singleMessageModelFromJson(response.body);
     return messageModel;
   }
 

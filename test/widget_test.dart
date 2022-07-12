@@ -5,22 +5,20 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutterapp/main.dart';
-import 'package:flutterapp/models/messagemodel.dart';
+import 'package:flutterapp/models/messageModel.dart';
 import 'package:flutterapp/pages/newTopic.dart';
-import 'package:flutterapp/service/MessageService.dart';
-import 'package:hive/hive.dart';
+import 'package:flutterapp/service/messageService.dart';
 import 'package:hive_flutter/adapters.dart';
 
 void main() {
 
-  Box _topicsBox;
+  Box topicsBox;
 
   setUpAll(() async {
     HttpOverrides.global = _HttpOverrides();
@@ -30,7 +28,7 @@ void main() {
 
     await tester.runAsync(() => Hive.initFlutter());
     await tester.runAsync(() => Hive.openBox('topics'));
-    _topicsBox = Hive.box("topics");
+    topicsBox = Hive.box("topics");
     await tester.pumpWidget(const MyApp());
     final button1 = find.widgetWithText(ElevatedButton, "Main");
     final button2 = find.widgetWithText(ElevatedButton, "Student");
@@ -60,8 +58,8 @@ void main() {
   testWidgets("Display new Button when new Topic created", (WidgetTester tester) async{
     await tester.runAsync(() => Hive.initFlutter());
     await tester.runAsync(() => Hive.openBox('topics'));
-    _topicsBox = Hive.box("topics");
-    await tester.pumpWidget(MaterialApp(home: newTopic()));
+    topicsBox = Hive.box("topics");
+    await tester.pumpWidget(const MaterialApp(home: NewTopic()));
     await tester.enterText(find.byType(TextField), "Crypto");
     await tester.tap(find.byType(IconButton));
     await tester.pumpWidget(const MyApp());

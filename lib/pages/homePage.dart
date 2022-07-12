@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/pages/messagepage.dart';
-import 'package:flutterapp/service/MessageService.dart';
+import 'package:flutterapp/pages/messagePage.dart';
+import 'package:flutterapp/service/messageService.dart';
 import 'package:hive/hive.dart';
 
-import '../models/messagemodel.dart';
+import '../models/messageModel.dart';
 import 'newTopic.dart';
 
 class Homepage extends StatefulWidget {
@@ -22,6 +21,7 @@ class _Homepage extends State<Homepage> {
 
 
   @override
+  // ignore: must_call_super
   void initState(){
     loadMessages("Main");
     _topicBox = Hive.box("topics");
@@ -46,7 +46,7 @@ class _Homepage extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-        title: Center(child: Text("CommunityCenter",style: TextStyle(color: Colors.white70))),
+        title: const Center(child: Text("CommunityCenter",style: TextStyle(color: Colors.white70))),
         elevation: 1.0,
         ),
       body: Container(
@@ -61,42 +61,42 @@ class _Homepage extends State<Homepage> {
             shrinkWrap: true,
             crossAxisCount: 4,
             childAspectRatio: 2,
-            padding: EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10),
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 child:ElevatedButton(
                     onPressed: (){
                       loadMessages("Main");
                     },
-                    child: Text("Main")
+                    child: const Text("Main")
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 child: ElevatedButton(
                     onPressed: (){
                       loadMessages("Student");
                     },
-                    child: Text("Student")
+                    child: const Text("Student")
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 child: ElevatedButton(
                     onPressed: (){
                       loadMessages("Work");
                     },
-                    child: Text("Work")
+                    child: const Text("Work")
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 child: ElevatedButton(
                     onPressed: (){
                       loadMessages("Hobby");
                     },
-                    child: Text("Hobby")
+                    child: const Text("Hobby")
                 ),
               ),
             ],
@@ -127,7 +127,7 @@ class _Homepage extends State<Homepage> {
             }
               else{
                 return Padding(
-                  padding: EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 20),
                   child: Column(
                     children: const [
                       Center(child: CircularProgressIndicator()),
@@ -144,7 +144,7 @@ class _Homepage extends State<Homepage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(
-            builder: (context) => newTopic(),
+            builder: (context) => const NewTopic(),
           ),
           );
         },
@@ -156,7 +156,7 @@ class _Homepage extends State<Homepage> {
 
   Padding newTopicButton(String topicName, int index){
     return Padding(
-      padding: EdgeInsets.all(4),
+      padding: const EdgeInsets.all(4),
       child: ElevatedButton(
           onPressed: (){
             loadMessages(topicName);
@@ -171,7 +171,7 @@ class _Homepage extends State<Homepage> {
   }
 
   Future refresh() async { //For the pull down functionality
-    Future.delayed(Duration(seconds: 1));//1sec duration to prevent spam
+    Future.delayed(const Duration(seconds: 1));//1sec duration to prevent spam
     loadMessages("Main");
   }
 
@@ -179,15 +179,15 @@ class _Homepage extends State<Homepage> {
     return Card(
       child: ListTile(
         title: Row(mainAxisSize: MainAxisSize.min,children: <Widget>[
-          Text(messageData.username, style: TextStyle(color: Colors.black,fontSize: 20),),
-          Text("("+messageData.topic+")",style:TextStyle(fontSize: 13,color: Colors.lightBlue)),
+          Text(messageData.username, style: const TextStyle(color: Colors.black,fontSize: 20),),
+          Text("(${messageData.topic})",style: const TextStyle(fontSize: 13,color: Colors.lightBlue)),
         ]),
-        subtitle: Text(messageData.mainMessage,style: TextStyle(fontSize: 20),),
+        subtitle: Text(messageData.mainMessage,style: const TextStyle(fontSize: 20),),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(messageData.subMessages!.length.toString(),),
-            Icon(Icons.message_outlined)
+            const Icon(Icons.message_outlined)
           ],
         ),
         onTap: (){

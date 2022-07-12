@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -23,23 +22,23 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("CommunityCenter",style: TextStyle(color: Colors.white70))),
+        title: const Center(child: Text("CommunityCenter",style: TextStyle(color: Colors.white70))),
         elevation: 1.0,
       ),
       body: Column(
         children: <Widget>[
-          Padding(padding: EdgeInsets.only(top: 20,bottom: 20),child: Text("Create Accountname:",style: TextStyle(fontSize: 25))),
+          const Padding(padding: EdgeInsets.only(top: 20,bottom: 20),child: Text("Create Accountname:",style: TextStyle(fontSize: 25))),
           Form(
             key:_formKey,
             child: Padding(
-              padding: EdgeInsets.only(left:20,right: 20),
+              padding: const EdgeInsets.only(left:20,right: 20),
               child: TextFormField(
-                style: TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                     hintText: 'Username',
-                    hintStyle: TextStyle(color: Colors.black),
+                    hintStyle: const TextStyle(color: Colors.black),
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.send),
+                      icon: const Icon(Icons.send),
                       onPressed: () async {
                         if(_formKey.currentState!.validate()){
                           _formKey.currentState!.save();
@@ -61,6 +60,7 @@ class _AccountPageState extends State<AccountPage> {
                   if(value.contains('@')){
                     return "@ is not allowed";
                   }
+                  return null;
                 },
                 onSaved: (String? value) {
                   _username = value!;

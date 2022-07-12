@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-List<MessageModel> MessageModelFromJson(String str) => List<MessageModel>.from(json.decode(str).map((x) => MessageModel.fromJson(x)));
+List<MessageModel> messageModelFromJson(String str) => List<MessageModel>.from(json.decode(str).map((x) => MessageModel.fromJson(x)));
 
-MessageModel SingleMessageModelFromJson(String str) => MessageModel.fromJson(json.decode(str));
+MessageModel singleMessageModelFromJson(String str) => MessageModel.fromJson(json.decode(str));
 
-String MessageModelToJson(MessageModel data) => json.encode(data.toJson());
+String messageModelToJson(MessageModel data) => json.encode(data.toJson());
 
-String SubMessageToJson(SubMessage data) => json.encode(data.toJson());
+String subMessageToJson(SubMessage data) => json.encode(data.toJson());
 
 class MessageModel {
   MessageModel({
